@@ -4,6 +4,7 @@ import string
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 # Function to generate a random string of a given length
 def generate_random_string(length):
     """
@@ -16,7 +17,8 @@ def generate_random_string(length):
     str: A random string of the specified length.
     """
     letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(length))
+    return "".join(random.choice(letters) for i in range(length))
+
 
 # Function to wait for an element to be present
 def wait_for_element(driver, by, value):
@@ -34,6 +36,7 @@ def wait_for_element(driver, by, value):
     wait = WebDriverWait(driver, 10)
     return wait.until(EC.presence_of_element_located((by, value)))
 
+
 # Function to take a screenshot
 def take_screenshot(driver, filename):
     """
@@ -45,10 +48,11 @@ def take_screenshot(driver, filename):
     """
     driver.save_screenshot(filename)
 
+
 # Function to maximize window
 def maximize_window(driver):
     """
-    Maximize the window 
+    Maximize the window
 
     Parameters:
     driver (WebDriver): The WebDriver instance to use.

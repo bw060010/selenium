@@ -3,6 +3,7 @@ from pages.tutorial_page import TutorialPage
 from utils.driver import setup_driver, teardown_driver
 from utils.helpers import maximize_window, take_screenshot
 
+
 # Define the test function
 def test_click_button():
     # Set up the driver
@@ -10,7 +11,7 @@ def test_click_button():
 
     # Assert that the correct page is loaded
     assert "Qxf2 Services: Selenium training main" in driver.title
-    print ("Success: Qxf2 Tutorial page launched successfully")
+    print("Success: Qxf2 Tutorial page launched successfully")
 
     # Maximize window
     maximize_window(driver)
@@ -22,7 +23,7 @@ def test_click_button():
     tutorial_page.cick_button()
 
     # Take a screenshot and save it as 'screenshot_button.png'
-    take_screenshot(driver, 'screenshot_button.png')
+    take_screenshot(driver, "screenshot_button.png")
 
     # Tear down the driver
     teardown_driver(driver)
