@@ -46,5 +46,9 @@ class TutorialPage:
 
     # Method to set the checkbox
     def set_checkbox(self):
-        checkbox = self.driver.find_element(By.XPATH, "//input[@type='checkbox']").click()
+        self.driver.find_element(By.XPATH, "//input[@type='checkbox']").click()
+
+    # Method to click the button
+    def cick_button(self):
+        self.driver.find_element(By.XPATH, "//button[text()='Click me!']").click()
 

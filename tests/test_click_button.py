@@ -4,7 +4,7 @@ from utils.driver import setup_driver, teardown_driver
 from utils.helpers import maximize_window, take_screenshot
 
 # Define the test function
-def test_set_checkbox():
+def test_click_button():
     # Set up the driver
     driver = setup_driver()
 
@@ -18,11 +18,11 @@ def test_set_checkbox():
     # Create an instance of the TutorialPage class
     tutorial_page = TutorialPage(driver)
 
-    # Set the checkbox
-    tutorial_page.set_checkbox()
+    # Click the button
+    tutorial_page.cick_button()
 
-    # Take a screenshot and save it as 'screenshot_checkbox.png'
-    take_screenshot(driver, 'screenshot_checkbox.png')
+    # Take a screenshot and save it as 'screenshot_button.png'
+    take_screenshot(driver, 'screenshot_button.png')
 
     # Tear down the driver
     teardown_driver(driver)
