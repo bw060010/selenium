@@ -1,11 +1,11 @@
 # Import necessary modules
 from pages.tutorial_page import TutorialPage
 from utils.driver import setup_driver, teardown_driver
-from utils.helpers import generate_random_string, take_screenshot, setup_logger
+from utils.helpers import maximize_window, take_screenshot, setup_logger
 
 
 # Define the test function
-def test_fill_fields():
+def test_click_button():
     # Set up the driver
     driver = setup_driver()
 
@@ -19,16 +19,17 @@ def test_fill_fields():
     except AssertionError as e:
         logger.error("Page not found: %s", e)
 
+    # Maximize window
+    maximize_window(driver)
+
     # Create an instance of the TutorialPage class
     tutorial_page = TutorialPage(driver, logger)
 
-    # Fill the name field with a random string of length 10
-    tutorial_page.fill_name(generate_random_string(10))
-    tutorial_page.fill_email("avinash@qxf2.com")
-    tutorial_page.fill_phone("9999999999")
+    # Validate
+    tutorial_page.validate_name_entered()
 
-    # Take a screenshot and save it as 'screenshot.png'
-    take_screenshot(driver, "screenshots\\screenshot.png")
+    # Take a screenshot and save it as 'screenshot_validate.png'
+    take_screenshot(driver, "screenshots\\screenshot_validate.png")
 
     # Tear down the driver
     teardown_driver(driver)

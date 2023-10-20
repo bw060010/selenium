@@ -1,11 +1,11 @@
 # Import necessary libraries
 import random
 import string
+import logging
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-# Function to generate a random string of a given length
 def generate_random_string(length):
     """
     Generate a random string of a given length.
@@ -20,7 +20,6 @@ def generate_random_string(length):
     return "".join(random.choice(letters) for i in range(length))
 
 
-# Function to wait for an element to be present
 def wait_for_element(driver, by, value):
     """
     Wait for an element to be present on the page.
@@ -37,7 +36,6 @@ def wait_for_element(driver, by, value):
     return wait.until(EC.presence_of_element_located((by, value)))
 
 
-# Function to take a screenshot
 def take_screenshot(driver, filename):
     """
     Take a screenshot of the current page.
@@ -49,7 +47,6 @@ def take_screenshot(driver, filename):
     driver.save_screenshot(filename)
 
 
-# Function to maximize window
 def maximize_window(driver):
     """
     Maximize the window
@@ -58,3 +55,19 @@ def maximize_window(driver):
     driver (WebDriver): The WebDriver instance to use.
     """
     driver.maximize_window()
+
+    import logging
+
+
+def setup_logger(name, log_file, level=logging.ERROR):
+    """Set up logger to log messages to console and file."""
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+
+    handler = logging.FileHandler("logs/" + log_file)
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(handler)
+
+    return logger

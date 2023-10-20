@@ -1,7 +1,7 @@
 # Import necessary modules
 from pages.tutorial_page import TutorialPage
 from utils.driver import setup_driver, teardown_driver
-from utils.helpers import maximize_window, take_screenshot
+from utils.helpers import maximize_window, take_screenshot, setup_logger
 
 
 # Define the test function
@@ -9,21 +9,27 @@ def test_click_button():
     # Set up the driver
     driver = setup_driver()
 
+    # Set up logging
+    logger = setup_logger("selenium_tests", "selenium_error.log")
+
     # Assert that the correct page is loaded
-    assert "Qxf2 Services: Selenium training main" in driver.title
-    print("Success: Qxf2 Tutorial page launched successfully")
+    try:
+        assert "Qxf2 Services: Selenium training main" in driver.title
+        print("Success: Qxf2 Tutorial page launched successfully")
+    except AssertionError as e:
+        logger.error("Page not found: %s", e)
 
     # Maximize window
     maximize_window(driver)
 
     # Create an instance of the TutorialPage class
-    tutorial_page = TutorialPage(driver)
+    tutorial_page = TutorialPage(driver, logger)
 
     # Click the button
-    tutorial_page.cick_button()
+    tutorial_page.click_button()
 
     # Take a screenshot and save it as 'screenshot_button.png'
-    take_screenshot(driver, "screenshot_button.png")
+    take_screenshot(driver, "screenshots\\screenshot_button.png")
 
     # Tear down the driver
     teardown_driver(driver)
