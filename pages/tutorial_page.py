@@ -130,3 +130,6 @@ class TutorialPage:
 
         if result_flag:
             print("Validation message for name present")
+
+    def check_url(self, url):
+        return self.driver.current_url == url
