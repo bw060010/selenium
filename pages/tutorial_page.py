@@ -2,6 +2,7 @@
 import time
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class TutorialPage:
@@ -111,12 +112,14 @@ class TutorialPage:
         button.click()
 
     def validate_name_entered(self):
-        """Method to check if the validation message shows"""
+        """Method to validate that the name was entered"""
+        # Click the button to submit the form
         self.click_button()
 
-        # Pause the script to wait for validation messages to load
+        # Wait for the validation message to appear
         time.sleep(2)
 
+        # Check if the validation message is present and print the result
         try:
             self.driver.find_element(
                 "xpath", "//label[text()='Please enter your name']"
@@ -124,7 +127,6 @@ class TutorialPage:
             result_flag = True
         except NoSuchElementException as e:
             self.logger.error("Elemenent not found: %s", e)
-            # This pattern of catching all exceptions is ok when you are starting out
             result_flag = False
             print("Validation message for name NOT present")
 
@@ -132,4 +134,42 @@ class TutorialPage:
             print("Validation message for name present")
 
     def check_url(self, url):
+        """Method to check if the URL is correct
+
+        Args:
+            url (str): the URL to check
+
+        Returns:
+            _type_: bool
+        """
         return self.driver.current_url == url
+
+    def click_element(self, element_name):
+        """Method to click an element
+
+        Args:
+            element_name (str): the XPATH locator
+        """
+        try:
+            element = self.driver.find_element("xpath", element_name)
+        except NoSuchElementException as e:
+            self.logger.error("Elemenent not found: %s", e)
+            raise
+        element.click()
+
+    def hover_over_element(self, element_name):
+        """Method to hover over an element
+
+        Args:
+            element_name (str): the XPATH locator
+        """
+        try:
+            element = self.driver.find_element("xpath", element_name)
+        except NoSuchElementException as e:
+            self.logger.error("Elemenent not found: %s", e)
+            raise
+
+        # Create an instance of ActionChains and move to the element
+        action = ActionChains(self.driver)
+        action.move_to_element(element)
+        action.perform()

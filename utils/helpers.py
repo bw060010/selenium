@@ -7,52 +7,48 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def generate_random_string(length):
-    """
-    Generate a random string of a given length.
+    """Function to generate a random string
 
-    Parameters:
-    length (int): The length of the string to generate.
+    Args:
+        length (int): The length of the random string.
 
     Returns:
-    str: A random string of the specified length.
+        str: The random string.
     """
     letters = string.ascii_lowercase
     return "".join(random.choice(letters) for i in range(length))
 
 
 def wait_for_element(driver, by, value):
-    """
-    Wait for an element to be present on the page.
+    """Function to wait for an element to be located
 
-    Parameters:
-    driver (WebDriver): The WebDriver instance to use.
-    by (By): The method to locate the element.
-    value (str): The value for the method to locate the element.
+    Args:
+        driver (WebDriver): The WebDriver instance to use.
+        by (str): The type of selector to use.
+        value (str): The selector value.
 
     Returns:
-    WebElement: The WebElement once it is located.
+        WebElement: The located element.
     """
     wait = WebDriverWait(driver, 10)
     return wait.until(EC.presence_of_element_located((by, value)))
 
 
 def take_screenshot(driver, filename):
-    """
-    Take a screenshot of the current page.
+    """Function to take a screenshot
 
-    Parameters:
-    driver (WebDriver): The WebDriver instance to use.
-    filename (str): The name of the file to save the screenshot as.
+    Args:
+        driver (WebDriver): The WebDriver instance to use.
+        filename (str): The name of the file to save.
     """
     driver.save_screenshot(filename)
 
 
 def maximize_window(driver):
-    """
-    Maximize the window
+    """Function to maximize the window
 
-    Parameters:
-    driver (WebDriver): The WebDriver instance to use.
+    Args:
+        driver (WebDriver): The WebDriver instance to use.
     """
     driver.maximize_window()
 
@@ -60,7 +56,16 @@ def maximize_window(driver):
 
 
 def setup_logger(name, log_file, level=logging.ERROR):
-    """Set up logger to log messages to console and file."""
+    """Function setup as many loggers as you want
+
+    Args:
+        name (str): The name of the logger
+        log_file (str): The name of the log file
+        level (str): The log level
+
+    Returns:
+        logger: The logger object
+    """
     formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
 
     handler = logging.FileHandler("logs/" + log_file)
