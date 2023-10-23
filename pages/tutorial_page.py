@@ -19,45 +19,21 @@ class TutorialPage:
         self.driver = driver
         self.logger = logger
 
-    def fill_name(self, name):
-        """Method to fill the name field
+    # create one function for each field, to make the code more readable
+    def fill_element(self, element_name, value, xpath_locator):
+        """Method to fill a field
 
         Args:
-            name (str): the 'name' value
+            element_name (str): the name of the element
+            value (str): the value to fill the field with
+            xpath_locator (str): the XPATH locator
         """
         try:
-            name_field = self.driver.find_element(By.XPATH, "//input[@id='name']")
+            element = self.driver.find_element(By.XPATH, xpath_locator)
         except NoSuchElementException as e:
             self.logger.error("Elemenent not found: %s", e)
             raise
-        name_field.send_keys(name)
-
-    def fill_email(self, email):
-        """Method to fill the email field
-
-        Args:
-            email (str): the 'email' value
-        """
-
-        try:
-            email_field = self.driver.find_element(By.XPATH, "//input[@name='email']")
-        except NoSuchElementException as e:
-            self.logger.error("Elemenent not found: %s", e)
-            raise
-        email_field.send_keys(email)
-
-    def fill_phone(self, phone):
-        """Method to fill the phone field
-
-        Args:
-            phone (str): the 'email' value
-        """
-        try:
-            phone_field = self.driver.find_element(By.ID, "phone")
-        except NoSuchElementException as e:
-            self.logger.error("Elemenent not found: %s", e)
-            raise
-        phone_field.send_keys(phone)
+        element.send_keys(value)
 
     def click_dropdown(self, dropdown_xpath, option_text):
         """Method to click the dropdown
@@ -151,7 +127,7 @@ class TutorialPage:
             element_name (str): the XPATH locator
         """
         try:
-            element = self.driver.find_element("xpath", element_name)
+            element = self.driver.find_element(By.XPATH, element_name)
         except NoSuchElementException as e:
             self.logger.error("Elemenent not found: %s", e)
             raise
@@ -164,7 +140,7 @@ class TutorialPage:
             element_name (str): the XPATH locator
         """
         try:
-            element = self.driver.find_element("xpath", element_name)
+            element = self.driver.find_element(By.XPATH, element_name)
         except NoSuchElementException as e:
             self.logger.error("Elemenent not found: %s", e)
             raise
@@ -173,3 +149,52 @@ class TutorialPage:
         action = ActionChains(self.driver)
         action.move_to_element(element)
         action.perform()
+
+    def count_table_rows(self, table_name_locator):
+        """Method to count the number of rows in a table
+
+        Args:
+            table_name_locator (str): the XPATH locator
+        """
+        try:
+            table = self.driver.find_element(By.XPATH, table_name_locator)
+        except NoSuchElementException as e:
+            self.logger.error("Elemenent not found: %s", e)
+            raise
+
+        # Get all the rows in the table
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        # Return the number of rows
+        return len(rows)
+
+    # parse the text within each cell of a table and return the text
+    def parse_table_text(self, table_name_locator):
+        """Method to parse the text within each cell of a table and return the text
+
+        Args:
+            table_name_locator (str): the XPATH locator
+        """
+        try:
+            table = self.driver.find_element(By.XPATH, table_name_locator)
+        except NoSuchElementException as e:
+            self.logger.error("Elemenent not found: %s", e)
+            raise
+
+        # Get all the rows in the table
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        # Create an empty list to store the text
+        texts = []
+
+        # Iterate over the rows and get the text from each cell
+        for row in rows:
+            # Get the cells in each row
+            cells = row.find_elements(By.TAG_NAME, "td")
+
+            # Iterate over the cells and get the text
+            for cell in cells:
+                texts.append(cell.text)
+
+        # Return the text
+        return texts

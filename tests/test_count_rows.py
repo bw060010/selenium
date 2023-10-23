@@ -1,11 +1,11 @@
 # Import necessary modules
 from pages.tutorial_page import TutorialPage
 from utils.driver import setup_driver, teardown_driver
-from utils.helpers import generate_random_string, take_screenshot, setup_logger
+from utils.helpers import maximize_window, take_screenshot, setup_logger
 
 
 # Define the test function
-def test_fill_fields():
+def test_count_rows():
     # Set up the driver
     driver = setup_driver()
 
@@ -19,18 +19,20 @@ def test_fill_fields():
     except AssertionError as e:
         logger.error("Page not found: %s", e)
 
+    # Maximize window
+    maximize_window(driver)
+
     # Create an instance of the TutorialPage class
     tutorial_page = TutorialPage(driver, logger)
 
-    # create one function for each field, to make the code more readable
-    tutorial_page.fill_element(
-        "name", generate_random_string(10), "//input[@id='name']"
-    )
-    tutorial_page.fill_element("email", "avinash@qxf2.com", "//input[@name='email']")
-    tutorial_page.fill_element("phone", "9999999999", "//input[@id='phone']")
+    # Count the number of rows in the table
+    rows = tutorial_page.count_table_rows("//table[@name='Example Table']")
 
-    # Take a screenshot and save it as 'screenshot.png'
-    take_screenshot(driver, "screenshots\\screenshot.png")
+    # Print the number of rows
+    print(f"Number of rows in the table: {rows}")
+
+    # Take a screenshot and save it as 'screenshot_table.png'
+    take_screenshot(driver, "screenshots\\screenshot_table.png")
 
     # Tear down the driver
     teardown_driver(driver)

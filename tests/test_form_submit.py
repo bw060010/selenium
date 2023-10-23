@@ -24,9 +24,11 @@ def test_form_submit():
     tutorial_page = TutorialPage(driver, logger)
 
     # Fill the name field with a random string of length 10
-    tutorial_page.fill_name(generate_random_string(10))
-    tutorial_page.fill_email("avinash@qxf2.com")
-    tutorial_page.fill_phone("9999999999")
+    tutorial_page.fill_element(
+        "name", generate_random_string(10), "//input[@id='name']"
+    )
+    tutorial_page.fill_element("email", "avinash@qxf2.com", "//input[@name='email']")
+    tutorial_page.fill_element("phone", "9999999999", "//input[@id='phone']")
 
     # Click the button and redirect to the next page
     tutorial_page.click_button()
